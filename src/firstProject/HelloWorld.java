@@ -1,6 +1,6 @@
 package firstProject;
 
-public class HelloWorld {
+public class cmsc401 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
