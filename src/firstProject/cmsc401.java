@@ -2,6 +2,8 @@
 
 package firstProject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class cmsc401 {
@@ -17,44 +19,54 @@ public class cmsc401 {
 		//User input
 		String str = sc.nextLine();
 		
+		//Finds what command char it is
+		char commandChar = str.charAt(0);
+		
 		//Creates String array of user input, each element separated by a space
 		String[] splited = str.split(" ");
 		
 		System.out.println(splited[0]);
 		
-		if(splited[0] == "4") {
-			System.out.println("If statement succeed");
+		String A = splited[0];
+		
+		String[] nonIntNumbers = Arrays.copyOfRange(splited, 1, splited.length);
+		
+		//Creates int array same length of nonIntNumbers
+		int[] numbers = new int[nonIntNumbers.length];
+		
+		//Converts elements in "nonIntNumbers" array to ints.
+		//Adds int elements to "numbers" array
+		for(int i = 0;i < nonIntNumbers.length;i++)
+		{
+		   numbers[i] = Integer.parseInt(nonIntNumbers[i]);
+		}
+		
+		if(commandChar == 'A') {
+			System.out.println("command A detected");
+			AproductCommand(numbers);
+		}
+		else if(commandChar == 'B') {
+			System.out.println("command B detected");
+			BfactorialCommand(numbers);
+		}
+		else if(commandChar == 'C') {
+			
 		}
 		else {
-			 System.out.println("If statement failed");
+			 System.out.println("if statement failed");
 		}
 		
-//		switch(splited[0]) {
-//		
-//			case "A": {
-//				AproductCommand(splited);
-//			}
-//		
-//			case "B": {
-//				int x = Integer.parseInt(splited[1]);
-//				BfactorialCommand(x);
-//			}
+//		System.out.println("Before: ");
+//		// Prints out each individual element in array
+//		for (int i = 0; i < nonIntNumbers.length; i++) {
+//		    System.out.println(nonIntNumbers[i]);
 //		}
-		
-//		//Creates int array same length of splited array
-//		int[] numbers = new int[splited.length];
 //		
-//		//Converts elements in "splited" array to ints.
-//		//Adds int elements to "numbers" array
-//		for(int i = 0;i < splited.length;i++)
-//		{
-//		   numbers[i] = Integer.parseInt(splited[i]);
-//		}
-//
+//		System.out.println("After: ");
 //		// Prints out each individual element in array
 //		for (int i = 0; i < numbers.length; i++) {
 //		    System.out.println(numbers[i]);
-//		}  
+//		}
 		
 	//	int y = x + 5;
 		
@@ -68,19 +80,21 @@ public class cmsc401 {
 
 	}
 	
-	public static void AproductCommand(String[] splited) {
-		
-		// Prints out each individual element in array
-				for (int i = 0; i < splited.length; i++) {
-				    System.out.println(splited[i]);
-				} 
-		int finaProduct;
-		System.out.println();
-	}
+	public static void AproductCommand(int[] myArray) {
+		int Product = 1;
+		for (int i = 0; i < myArray.length; i++) {
+	    if(myArray[i] != 0) {
+	    	Product = myArray[i] * Product;
+	    	};
+	    	
+	    };
+	    int finalProduct = Product;
+	    System.out.println(finalProduct);
+	}; 
 	
-	public static void BfactorialCommand(int x) {
+	public static void BfactorialCommand(int[] myArray) {
 
-		int num = x;
+		int num = myArray[0];
         long factorial = 1;
         for(int i = 1; i <= num; ++i)
         {
@@ -93,3 +107,8 @@ public class cmsc401 {
 	
 
 }
+
+//// Prints out each individual element in array
+//for (int i = 0; i < myArray.length; i++) {
+//    System.out.println(myArray[i]);
+//} 
