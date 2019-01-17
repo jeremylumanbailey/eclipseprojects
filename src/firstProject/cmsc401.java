@@ -25,9 +25,9 @@ public class cmsc401 {
 		//Creates String array of user input, each element separated by a space
 		String[] splited = str.split(" ");
 		
-		System.out.println(splited[0]);
+//		System.out.println(splited[0]);
 		
-		String A = splited[0];
+//		String A = splited[0];
 		
 		String[] nonIntNumbers = Arrays.copyOfRange(splited, 1, splited.length);
 		
@@ -48,9 +48,6 @@ public class cmsc401 {
 		else if(commandChar == 'B') {
 			System.out.println("command B detected");
 			BfactorialCommand(numbers);
-		}
-		else if(commandChar == 'C') {
-			
 		}
 		else {
 			 System.out.println("if statement failed");
@@ -79,12 +76,27 @@ public class cmsc401 {
 		System.out.println("Program complete");
 
 	}
-	
+//	
+//	A 13 2 5 0 1 3
+	// ^ need 130
+//	B 5
+//	A 8 12 6 15 0 2 3
+	//need 12 * 6 = 72 ^
 	public static void AproductCommand(int[] myArray) {
 		int Product = 1;
-		for (int i = 0; i < myArray.length; i++) {
-	    if(myArray[i] != 0) {
-	    	Product = myArray[i] * Product;
+		int startIndex = myArray[myArray.length - 2];
+		int endIndex = myArray[myArray.length - 1];
+		int[] terms = Arrays.copyOfRange(myArray, 0, myArray.length - 2);
+//	// Prints out each individual element in array
+//		for (int i = 0; i < terms.length; i++) {
+//		    System.out.println(terms[i]);
+//		} 
+//		System.out.println("array length " + myArray.length);
+//		System.out.println("endIndex is " + endIndex);
+//		System.out.println("startIndex is " + startIndex);
+		for (int i = startIndex - 1; i < endIndex ; i++) {
+	    if(terms[i] != 0) {
+	    	Product = terms[i] * Product;
 	    	};
 	    	
 	    };
