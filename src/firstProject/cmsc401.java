@@ -2,12 +2,15 @@
 
 package firstProject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class cmsc401 {
 
 	public static void main(String[] args) {
+		
+		ArrayList<Integer> results = new ArrayList<>();
 
 		boolean persist = true;
 		char commandChar;
@@ -50,12 +53,23 @@ public class cmsc401 {
 
 			if (commandChar == 'A') {
 				// System.out.println("command A detected");
-				AproductCommand(numbers);
+				int xyz = AproductCommand(numbers);
+				results.add(xyz);
+				
 			} else if (commandChar == 'B') {
 				// System.out.println("command B detected");
-				BfactorialCommand(numbers);
+				int xyz = BfactorialCommand(numbers);
+				results.add(xyz);
 			} else {
-				// System.out.println("if statement failed");
+				
+				//Create array from arraylist to make printing results easier
+				Object[] finalResults = results.toArray(); 
+				  
+		        // Print out results
+		        for (Object obj : finalResults) 
+		            System.out.println(obj + " ");
+				
+		        //Stop loop
 				persist = false;
 			}
 		}
@@ -65,7 +79,7 @@ public class cmsc401 {
 
 	}
 	//Computes A command from startIndex to endIndex ignoring any zeros
-	public static void AproductCommand(int[] myArray) {
+	public static int AproductCommand(int[] myArray) {
 		int Product = 1;
 		int startIndex = myArray[myArray.length - 2];
 		int endIndex = myArray[myArray.length - 1];
@@ -80,19 +94,22 @@ public class cmsc401 {
 		}
 		;
 		int finalProduct = Product;
-		System.out.println(finalProduct);
+	//	System.out.println(finalProduct);
+		return Product;
+		
 	};
 	
 	//Computes B command by giving factorial
-	public static void BfactorialCommand(int[] myArray) {
+	public static int BfactorialCommand(int[] myArray) {
 
 		int num = myArray[0];
-		long factorial = 1;
+		int factorial = 1;
 		for (int i = 1; i <= num; ++i) {
 			factorial *= i;
 		}
-
-		System.out.println(factorial);
+	//	System.out.println(factorial);
+		return factorial;
+		
 
 	}
 
