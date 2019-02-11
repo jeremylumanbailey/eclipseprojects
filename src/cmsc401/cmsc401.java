@@ -1,6 +1,6 @@
 // @author Jeremy Bailey
 
-package firstProject;
+package cmsc401;
 
 import java.util.ArrayList;
 import java.util.Arrays;
