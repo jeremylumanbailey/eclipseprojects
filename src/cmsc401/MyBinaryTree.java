@@ -32,19 +32,20 @@
 
 package cmsc401;
 
+import java.util.Scanner;
+import cmsc401.BTNode;
+
 public class MyBinaryTree {
-	
-	class BTNode {
-		int key;
-		BTNode parent;
-		BTNode left;
-		BTNode right;
-		} 
 
 	public static void main(String[] args) {
 		
-		System.out.println("MyBinaryTree");
+		Scanner input = new Scanner(System.in);
+		BTNode root = new BTNode();
 		
+		root.setKey(25);
+		
+		System.out.println("MyBinaryTree");
+		System.out.println(root.key);
 
 	}
 	
