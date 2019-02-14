@@ -6,6 +6,14 @@ public class BTNode {
 	{
 
 	}
+	
+	BTNode(int k, BTNode p, BTNode l, BTNode r)
+	{
+		this.key = k;
+		this.parent = p;
+		this.left = l;
+		this.right = r;
+	}
 
 	int key;
 	BTNode parent;

@@ -32,6 +32,7 @@
 
 package cmsc401;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import cmsc401.BTNode;
 
@@ -40,12 +41,41 @@ public class MyBinaryTree {
 	public static void main(String[] args) {
 		
 		Scanner input = new Scanner(System.in);
-		BTNode root = new BTNode();
 		
-		root.setKey(25);
+		 if (input.hasNextLine()) {
+		        String line = input.nextLine();
+		        String[] arr = line.split("\\s+");
+		        int[] vals = new int[arr.length];
+		        for (int i = 0; i < arr.length; i++) {
+		            vals[i] = Integer.parseInt(arr[i]);
+		        }
+		        BTNode[] nodes = new BTNode[vals.length];
+		        for(int i = 0; i < vals.length; i++) {
+		        	nodes[i] = new BTNode();
+		        }
+		        for(int i = 0; i < vals.length; i++) {
+		        	nodes[i].key = vals[i];
+		        }		 
+			
+		 }
+		 
+		 
+		 
+		 
 		
-		System.out.println("MyBinaryTree");
-		System.out.println(root.key);
+//		BTNode root = new BTNode();
+//		BTNode rChildRoot = new BTNode();
+//		// int key, BTNode parent, BTNode left, BTNode right
+//		BTNode lChildRoot = new BTNode(20,root,null,rChildRoot);
+//		root.setKey(25);
+//		root.setRight(rChildRoot);
+//		rChildRoot.setKey(27);
+//		rChildRoot.setParent(root);
+//		
+//		System.out.println(lChildRoot.right);
+//		System.out.println("MyBinaryTree");
+//		System.out.println(root.key);
+//		System.out.println(rChildRoot.parent);
 
 	}
 	
