@@ -30,17 +30,63 @@
 		-65 1 5 7 10 21 42 101 9998
  */
 
-
-
-
 package cmsc401;
 
 public class MyBinaryTree {
+	
+	class BTNode {
+		int key;
+		BTNode parent;
+		BTNode left;
+		BTNode right;
+		} 
 
 	public static void main(String[] args) {
 		
 		System.out.println("MyBinaryTree");
+		
 
 	}
-
+	
+	// This method will add a new integer number into the binary search tree
+	void add(int newNum) {
+		
+		
+	}
+	
+	//Delete the number delNum if it exists. Return true if
+		//	succeeds and or return false if the number does not exist.
+	 boolean delete(int delNum) {
+	
+	
+		
+		return false;
+	}
+	
+	 // Check whether the tree contains the number num or not.	
+	 boolean contains(int num) {
+		
+		 return false;
+	 }
+	
+	 // Return the preorder traversal result (numbers are separated by spaces)
+		 
+	 String inOrder() {
+		 
+		 return "String";
+	 }
+	 
+	 // Return the preorder traversal result (numbers are separated by spaces)
+	 String preOrder() {
+		 
+		 return "String";
+	 }
+	 
+	// Return the postorder traversal result (numbers are separated by spaces)
+	 String postOrder() {
+		 
+		 return "String";
+	 }
+	 
+	 
 }

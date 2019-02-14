@@ -14,6 +14,8 @@ public class MyQuicksort {
 	        for (int i = 0; i < arr.length; i++) {
 	            vals[i] = Integer.parseInt(arr[i]);
 	        }
+	        
+	        //vals= {5, 4, 3, 2, 1,}
 		quickSort(vals, 0, vals.length-1);
 		
 		System.out.println(Arrays.toString(vals));
