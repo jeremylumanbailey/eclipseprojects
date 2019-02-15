@@ -7,6 +7,11 @@ public class BTNode {
 
 	}
 	
+	BTNode(int k)
+	{
+		this.key = k;
+	}
+	
 	BTNode(int k, BTNode p, BTNode l, BTNode r)
 	{
 		this.key = k;
