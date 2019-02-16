@@ -95,12 +95,14 @@ public class MyBinaryTree {
 	}
 	
 	private int findSmallestKey(BTNode root) {
+	  //  return 
 	    		if(root.left == null) {
 	    			return root.key; 
 	    		}	
-	    		else {
+	    		else { 
 	    			return findSmallestKey(root.left);
-	    		}		
+	    		}
+	    		
 	}
 	
 	//delete?
