@@ -45,40 +45,40 @@ public class MyBinaryTree {
 		Scanner input = new Scanner(System.in);
 		
 		 if (input.hasNextLine()) {
-      String line = input.nextLine();
-      String[] arr = line.split("\\s+");
-      int[] vals = new int[arr.length];
-      for (int i = 0; i < arr.length; i++) {
-          vals[i] = Integer.parseInt(arr[i]);
+      String userInput = input.nextLine();
+      String[] array = userInput.split("\\s+");
+      int[] integerArray = new int[array.length];
+      for (int i = 0; i < array.length; i++) {
+          integerArray[i] = Integer.parseInt(array[i]);
           
       }
       input.close();
-      makeBinaryTree(vals);
+      makeBinaryTree(integerArray);
 		 }	 
 	}
 	
-	public static void makeBinaryTree(int[] arr) {	
+	public static void makeBinaryTree(int[] array) {	
 		
 	    MyBinaryTree BT = new MyBinaryTree();
 	    
-	    for (int i = 0; i < arr.length; i++) {
-	          BT.add(arr[i]);
+	    for (int i = 0; i < array.length; i++) {
+	          BT.add(array[i]);
 	      }
 	    BT.inOrder();
 	    
 	}
 	
 	
-	BTNode addRecursive(BTNode currentNode, int newNum) {
+	BTNode addNode(BTNode currentNode, int newNum) {
 		if(currentNode == null) {
 			return new BTNode(newNum);
 		}
 		
 		if(newNum < currentNode.key) {
-			currentNode.left = addRecursive(currentNode.left, newNum);
+			currentNode.left = addNode(currentNode.left, newNum);
 		}
 		else if (newNum > currentNode.key) {
-			currentNode.right = addRecursive(currentNode.right, newNum);
+			currentNode.right = addNode(currentNode.right, newNum);
 		}
 		else {
 			return currentNode;
@@ -90,23 +90,26 @@ public class MyBinaryTree {
 	// This method will add a new integer number into the binary search tree
 	void add(int newNum) {
 	
-		root = addRecursive(root, newNum);
+		root = addNode(root, newNum);
 		
 	}
 	
-	private int findSmallestValue(BTNode root) {
-	    return root.left == null ? root.key : findSmallestValue(root.left);
+	private int findSmallestKey(BTNode root) {
+	    		if(root.left == null) {
+	    			return root.key; 
+	    		}	
+	    		else {
+	    			return findSmallestKey(root.left);
+	    		}		
 	}
 	
 	//delete?
-	BTNode deleteRecursive(BTNode current, int delNum) {
+	BTNode deleteNode(BTNode current, int delNum) {
 	    if (current == null) {
 	        return null;
 	    }
 	 
 	    if (delNum == current.key) {
-	        // Node to delete found
-	        // ... code to delete the node will go here
 	    	
 	    	if (current.left == null && current.right == null) {
 	    	    return null;
@@ -121,18 +124,18 @@ public class MyBinaryTree {
 	    	}
 	    	
 	    	
-	    	int smallestValue = findSmallestValue(current.right);
+	    	int smallestValue = findSmallestKey(current.right);
 	    	current.key = smallestValue;
-	    	current.right = deleteRecursive(current.right, smallestValue);
+	    	current.right = deleteNode(current.right, smallestValue);
 	    	return current;
 	    	
 	    	
 	    } 
 	    if (delNum < current.key) {
-	        current.left = deleteRecursive(current.left, delNum);
+	        current.left = deleteNode(current.left, delNum);
 	        return current;
 	    }
-	    current.right = deleteRecursive(current.right, delNum);
+	    current.right = deleteNode(current.right, delNum);
 	    return current;
 	}
 	
@@ -140,51 +143,57 @@ public class MyBinaryTree {
 		//	succeeds and or return false if the number does not exist.
 	 boolean delete(int delNum) {
 		 
-		    root = deleteRecursive(root, delNum);
+		    root = deleteNode(root, delNum);
 		   return true;
 		    
 	}
 	
 	 // Check whether the tree contains the number num or not.	
 	 boolean contains(int num) {
-		return containsNodeRecursive(root, num);
+		return containsNode(root, num);
 	 }
 	
-	 private boolean containsNodeRecursive(BTNode currentNode, int num) {
+	 private boolean containsNode(BTNode currentNode, int num) {
 		if(currentNode == null) {
 			return false;
 		}
 		if(num == currentNode.key) {
 			return true;
 		}
-		return num < currentNode.key
-				? containsNodeRecursive(currentNode.left, num)
-				: containsNodeRecursive(currentNode.right, num);
+		
+		if(num < currentNode.key)  {
+			return containsNode(currentNode.left, num);
+					
+		}
+		else {
+			return containsNode(currentNode.right, num);
+		}
+				
 	}
 	 
 	 
 	 
 	 
-	 public void traverseInOrder(BTNode node) {
+	 public void printInOrder(BTNode node) {
 		    if (node != null) {
-		        traverseInOrder(node.left);
+		        printInOrder(node.left);
 		        System.out.print(" " + node.key);
-		        traverseInOrder(node.right);
+		        printInOrder(node.right);
 		    }
 		}
 
-	 public void traversePreOrder(BTNode node) {
+	 public void printPreOrder(BTNode node) {
 		    if (node != null) {
 		        System.out.print(" " + node.key);
-		        traversePreOrder(node.left);
-		        traversePreOrder(node.right);
+		        printPreOrder(node.left);
+		        printPreOrder(node.right);
 		    }
 		}
 	 
-	 public void traversePostOrder(BTNode node) {
+	 public void printPostOrder(BTNode node) {
 		    if (node != null) {
-		        traversePostOrder(node.left);
-		        traversePostOrder(node.right);
+		        printPostOrder(node.left);
+		        printPostOrder(node.right);
 		        System.out.print(" " + node.key);
 		    }
 		}
@@ -193,20 +202,20 @@ public class MyBinaryTree {
 	// Return the preorder traversal result (numbers are separated by spaces)
 		 
 	 String inOrder() {
-		traverseInOrder(root);
+		printInOrder(root);
 		 
 		 return "";
 	 }
 	 
 	 // Return the preorder traversal result (numbers are separated by spaces)
 	 String preOrder() {
-		 traversePreOrder(root);
+		 printPreOrder(root);
 		 return "";
 	 }
 	 
 	// Return the postorder traversal result (numbers are separated by spaces)
 	 String postOrder() {
-		 traversePostOrder(root);
+		 printPostOrder(root);
 		 return "";
 	 }
 	 
@@ -232,18 +241,18 @@ public class MyBinaryTree {
 
 //
 // if (input.hasNextLine()) {
-//        String line = input.nextLine();
-//        String[] arr = line.split("\\s+");
-//        int[] vals = new int[arr.length];
-//        for (int i = 0; i < arr.length; i++) {
-//            vals[i] = Integer.parseInt(arr[i]);
+//        String userInput = input.nextLine();
+//        String[] array = userInput.split("\\s+");
+//        int[] integerArray = new int[array.length];
+//        for (int i = 0; i < array.length; i++) {
+//            integerArray[i] = Integer.parseInt(array[i]);
 //        }
-//        BTNode[] nodes = new BTNode[vals.length];
-//        for(int i = 0; i < vals.length; i++) {
+//        BTNode[] nodes = new BTNode[integerArray.length];
+//        for(int i = 0; i < integerArray.length; i++) {
 //        	nodes[i] = new BTNode();
 //        }
-//        for(int i = 0; i < vals.length; i++) {
-//        	nodes[i].key = vals[i];
+//        for(int i = 0; i < integerArray.length; i++) {
+//        	nodes[i].key = integerArray[i];
 //        }		 
 //	
 // }
