@@ -14,7 +14,7 @@ public class MyQuicksort {
 	        for (int i = 0; i < array.length; i++) {
 	            intArray[i] = Integer.parseInt(array[i]);
 	        }
-	        System.out.println(intArray.length-1);
+	        
 		quickSort(intArray, 0, intArray.length-1);
 		
 		System.out.println(Arrays.toString(intArray)); }}
@@ -41,9 +41,7 @@ public class MyQuicksort {
 					array[p1]=array[i];
 					array[i]=temp;
 				}	p1++;
-			}
-		}
-		
+			} }
 				array[first]=array[p1-1];
 				array[p1-1]=pivot;
 		

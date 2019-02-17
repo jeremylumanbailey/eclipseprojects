@@ -64,7 +64,13 @@ public class MyBinaryTree {
 	    for (int i = 0; i < array.length; i++) {
 	          BT.add(array[i]);
 	      }
-	    BT.inOrder();
+
+	    String inOrder = BT.inOrder();
+	    System.out.println("inorder: " + inOrder);
+	    String preorder = BT.preOrder();
+	    System.out.println("preorder: " + preorder);
+	    String postOrder = BT.postOrder();
+	    System.out.println("postorder: " + postOrder);
 	    
 	}
 	
@@ -95,7 +101,7 @@ public class MyBinaryTree {
 	}
 	
 	private int findSmallestKey(BTNode root) {
-	  //  return 
+	 
 	    		if(root.left == null) {
 	    			return root.key; 
 	    		}	
@@ -105,7 +111,6 @@ public class MyBinaryTree {
 	    		
 	}
 	
-	//delete?
 	BTNode deleteNode(BTNode current, int delNum) {
 	    if (current == null) {
 	        return null;
@@ -145,8 +150,13 @@ public class MyBinaryTree {
 		//	succeeds and or return false if the number does not exist.
 	 boolean delete(int delNum) {
 		 
+		 if(containsNode(root, delNum)) {
 		    root = deleteNode(root, delNum);
 		   return true;
+		 }
+		 else{
+		   return false;
+		 }
 		    
 	}
 	
@@ -173,52 +183,57 @@ public class MyBinaryTree {
 				
 	}
 	 
-	 
-	 
-	 
-	 public void printInOrder(BTNode node) {
+	 public void printInOrder(StringBuilder stringbuilder, BTNode node) {
 		    if (node != null) {
-		        printInOrder(node.left);
-		        System.out.print(" " + node.key);
-		        printInOrder(node.right);
+		        printInOrder(stringbuilder, node.left);
+		        stringbuilder.append(" " + Integer.toString(node.key));
+		        printInOrder(stringbuilder, node.right);
 		    }
 		}
 
-	 public void printPreOrder(BTNode node) {
+	 public void printPreOrder(StringBuilder stringbuilder, BTNode node) {
 		    if (node != null) {
-		        System.out.print(" " + node.key);
-		        printPreOrder(node.left);
-		        printPreOrder(node.right);
+		    	stringbuilder.append(" " + Integer.toString(node.key));
+		        printPreOrder(stringbuilder, node.left);
+		        printPreOrder(stringbuilder, node.right);
 		    }
 		}
 	 
-	 public void printPostOrder(BTNode node) {
+	 public void printPostOrder(StringBuilder stringbuilder, BTNode node) {
 		    if (node != null) {
-		        printPostOrder(node.left);
-		        printPostOrder(node.right);
-		        System.out.print(" " + node.key);
+		        printPostOrder(stringbuilder, node.left);
+		        printPostOrder(stringbuilder, node.right);
+		        stringbuilder.append(" " + Integer.toString(node.key));
+		      
 		    }
 		}
-
-
+	 
 	// Return the preorder traversal result (numbers are separated by spaces)
 		 
 	 String inOrder() {
-		printInOrder(root);
+		 StringBuilder stringBuilder = new StringBuilder();
 		 
-		 return "";
+		printInOrder(stringBuilder,root);
+		 
+		 return stringBuilder.toString();
 	 }
 	 
 	 // Return the preorder traversal result (numbers are separated by spaces)
 	 String preOrder() {
-		 printPreOrder(root);
-		 return "";
+		 StringBuilder stringBuilder2 = new StringBuilder();
+		 
+		 printPreOrder(stringBuilder2, root);
+		 
+		 return stringBuilder2.toString();
 	 }
 	 
 	// Return the postorder traversal result (numbers are separated by spaces)
 	 String postOrder() {
-		 printPostOrder(root);
-		 return "";
+		 StringBuilder stringBuilder3 = new StringBuilder();
+		 
+		 printPostOrder(stringBuilder3, root);
+		 
+		 return stringBuilder3.toString();
 	 }
 	 
 	 
