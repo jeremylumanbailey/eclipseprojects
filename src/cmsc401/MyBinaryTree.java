@@ -1,42 +1,69 @@
 // @author Jeremy Bailey
 
-/*   
-	You are asked to implement a binary search tree class named MyBinaryTree that satisfies the
-	following requirements:
-		1. It will use the following class as the binary tree node.
-		class BTNode {
+package cmsc401;
+
+import java.util.*;
+
+public class MyBinaryTree {
+	
+	/*Create BTNode class. Built a few constructors a default one, one that just
+	 * takes in a key, and one that takes everything. Went ahead and set up the setters and 
+	 * getters, even if I did not end up using most of them. 
+	 * I made full use of BTNode left and BTNode right but did not have to use the BTNode parent to 
+	 * properly function.
+	 * 
+	 */
+	public class BTNode {
+		
+		BTNode()
+		{
+
+		}
+		
+		BTNode(int k)
+		{
+			this.key = k;
+		}
+		
+		BTNode(int k, BTNode p, BTNode l, BTNode r)
+		{
+			this.key = k;
+			this.parent = p;
+			this.left = l;
+			this.right = r;
+		}
+
 		int key;
 		BTNode parent;
 		BTNode left;
 		BTNode right;
+		
+		public int getKey() {
+			return key;
+		}
+		public void setKey(int key) {
+			this.key = key;
+		}
+		public BTNode getParent() {
+			return parent;
+		}
+		public void setParent(BTNode parent) {
+			this.parent = parent;
+		}
+		public BTNode getLeft() {
+			return left;
+		}
+		public void setLeft(BTNode left) {
+			this.left = left;
+		}
+		public BTNode getRight() {
+			return right;
+		}
+		public void setRight(BTNode right) {
+			this.right = right;
 		}
 		
-		2. It should contain but not limited to the following methods:
-		void add(int newNum) // This method will add a new integer number into the binary
-		search tree.
-		boolean delete(int delNum) // Delete the number delNum if it exists. Return true if
-		succeeds and or return false if the number does not exist.
-		boolean contains (int num) // Check whether the tree contains the number num or
-		not.
-		String inOrder() // Return the inorder traversal result (numbers are separated by spaces)
-		String preOrder() // Return the preorder traversal result (numbers are separated by
-		spaces)
-		String postOrder() // Return the postorder traversal result (numbers are separated by
-		spaces)
-		
-		3. It should have a main method that reads a sequence of numbers from the terminal and
-		print the sorted results. For example:
-		>java MyBinaryTree 5 10 7 101 42 1 21 9998 -65
-		-65 1 5 7 10 21 42 101 9998
- */
-
-package cmsc401;
-
-import java.util.Arrays;
-import java.util.Scanner;
-import cmsc401.BTNode;
-
-public class MyBinaryTree {
+	}
 	
 	BTNode root;
 	
@@ -64,13 +91,13 @@ public class MyBinaryTree {
 	    for (int i = 0; i < array.length; i++) {
 	          BT.add(array[i]);
 	      }
-
+	    
+	    //if input: 5 10 7 101 42 1 21 9998 -65
 	    String inOrder = BT.inOrder();
-	    System.out.println("inorder: " + inOrder);
-	    String preorder = BT.preOrder();
-	    System.out.println("preorder: " + preorder);
-	    String postOrder = BT.postOrder();
-	    System.out.println("postorder: " + postOrder);
+	    
+	    //then output: -65 1 5 7 10 21 42 101 9998
+	    System.out.println(inOrder);
+	    
 	    
 	}
 	
@@ -146,11 +173,11 @@ public class MyBinaryTree {
 	    return current;
 	}
 	
-	//Delete the number delNum if it exists. Return true if
+		// Delete the number delNum if it exists. Return true if
 		//	succeeds and or return false if the number does not exist.
 	 boolean delete(int delNum) {
 		 
-		 if(containsNode(root, delNum)) {
+		 if(hasNode(root, delNum)) {
 		    root = deleteNode(root, delNum);
 		   return true;
 		 }
@@ -162,10 +189,10 @@ public class MyBinaryTree {
 	
 	 // Check whether the tree contains the number num or not.	
 	 boolean contains(int num) {
-		return containsNode(root, num);
+		return hasNode(root, num);
 	 }
 	
-	 private boolean containsNode(BTNode currentNode, int num) {
+	 private boolean hasNode(BTNode currentNode, int num) {
 		if(currentNode == null) {
 			return false;
 		}
@@ -174,11 +201,11 @@ public class MyBinaryTree {
 		}
 		
 		if(num < currentNode.key)  {
-			return containsNode(currentNode.left, num);
+			return hasNode(currentNode.left, num);
 					
 		}
 		else {
-			return containsNode(currentNode.right, num);
+			return hasNode(currentNode.right, num);
 		}
 				
 	}
@@ -238,54 +265,3 @@ public class MyBinaryTree {
 	 
 	 
 }
-
-
-//public static MyBinaryTree createBinaryTree() {
-//MyBinaryTree BT = new MyBinaryTree();
-//BT.add(9);
-//BT.add(4);
-//BT.add(10);
-//BT.add(21);
-//BT.add(2);
-//BT.add(8);
-//BT.add(3);
-//
-//return BT;
-//	}
-
-//	Scanner input = new Scanner(System.in);
-
-
-//
-// if (input.hasNextLine()) {
-//        String userInput = input.nextLine();
-//        String[] array = userInput.split("\\s+");
-//        int[] integerArray = new int[array.length];
-//        for (int i = 0; i < array.length; i++) {
-//            integerArray[i] = Integer.parseInt(array[i]);
-//        }
-//        BTNode[] nodes = new BTNode[integerArray.length];
-//        for(int i = 0; i < integerArray.length; i++) {
-//        	nodes[i] = new BTNode();
-//        }
-//        for(int i = 0; i < integerArray.length; i++) {
-//        	nodes[i].key = integerArray[i];
-//        }		 
-//	
-// }
-
-
-
-/*BTNode root = new BTNode();
-BTNode rChildRoot = new BTNode();
-// int key, BTNode parent, BTNode left, BTNode right
-BTNode lChildRoot = new BTNode(20,root,null,rChildRoot);
-root.setKey(25);
-root.setRight(rChildRoot);
-rChildRoot.setKey(27);
-rChildRoot.setParent(root);
-
-System.out.println(lChildRoot.right);
-System.out.println("MyBinaryTree");
-System.out.println(root.key);
-System.out.println(rChildRoot.parent);*/
