@@ -1,6 +1,7 @@
+import java.util.Iterator;
 import java.util.LinkedList;
 
-//sources programiz,
+//sources programiz, geeksforgeeks
 public class MyGraph {
 	
   public int vertex;
@@ -8,14 +9,16 @@ public class MyGraph {
 
 	public static void main(String[] args) {
 		
-		int[][]arr= {{1,0,1,0},{0,1,1,0},{0,1,1,1},{1,0,0,1}};
+		int[][]arr= {{0,1,1,0},{0,0,0,0},{1,0,0,1},{0,0,0,1}};
 		MyGraph graph = new MyGraph();
 		graph.initialize(arr);
 		
-  		System.out.println(graph.isConnected(0, 1));
-		System.out.println(graph.isConnected(1, 3));
-		System.out.println(graph.outDegree(2));
-		graph.printGraph(graph);
+//  		System.out.println(graph.isConnected(0, 1));
+//		System.out.println(graph.isConnected(1, 3));
+//		System.out.println(graph.outDegree(2));
+//		System.out.println(graph.hops(3, 1));
+//		graph.printGraph(graph);
+		System.out.println(graph.DFS(2));
 	}
 
 // This method will construct a graph based on
@@ -48,19 +51,74 @@ public class MyGraph {
 	// (node IDs are separated by spaces. Do not visit nodes that cannot be reached
 	// from the
 	// starting node.)
-	String DFS(int id) {
-		return null;
-
-	}
+	String DFS(int id) { 
+        // Mark all the vertices as not visited(By default 
+        // set as false)
+		StringBuilder DFSoutput = new StringBuilder();
+        boolean visited[] = new boolean[this.vertex]; 
+  
+        // Create a queue for BFS 
+        LinkedList<Integer> queue = new LinkedList<Integer>(); 
+  
+        // Mark the current node as visited and enqueue it 
+        visited[id]=true; 
+        queue.add(id); 
+  
+        while (queue.size() != 0) 
+        { 
+            // Dequeue a vertex from queue and print it 
+            id = queue.poll();
+            DFSoutput.append(id + " ");
+            System.out.print(id+" "); 
+  
+            // Get all adjacent vertices of the dequeued vertex s 
+            // If a adjacent has not been visited, then mark it 
+            // visited and enqueue it 
+            Iterator<Integer> i = this.adjacencyList[id].listIterator(); 
+            while (i.hasNext()) 
+            { 
+                int n = i.next(); 
+                if (!visited[n]) 
+                { 
+                    visited[n] = true; 
+                    queue.add(n); 
+                } 
+            } 
+        }
+        return DFSoutput.toString();
+    }
 
 	// Return the breadth first search traversal result starting from a node
 	// (node IDs are separated by spaces. Do not visit nodes that cannot be reached
 	// from the
 	// starting node.)
 	String BFS(int id) {
-		return null;
+		StringBuilder BFSoutput = new StringBuilder();
+        boolean visited[] = new boolean[this.vertex];
 
-	}
+        LinkedList<Integer> queue = new LinkedList<Integer>();
+        visited[id] = true;
+        queue.add(id);
+
+        while (queue.size() != 0) {
+
+            id = queue.poll();
+            BFSoutput.append(id + " ");
+
+            Iterator<Integer> i = this.adjacencyList[id].listIterator();
+            while (i.hasNext()) {
+                int num = i.next();
+                if (!visited[num]) {
+                    visited[num] = true;
+                    queue.add(num);
+                }
+
+            }
+
+        }
+
+        return BFSoutput.toString();
+    }
 
 	// Return whether there is an edge from id1 to id2
 	boolean isConnected(int id1, int id2) {
@@ -79,28 +137,54 @@ public class MyGraph {
 	// Returns the minimal number of hops from node 1 to node
 	// 2. If there is no path from node 1 to node 2 then return -1.
 	int hops(int id1, int id2) {
-		if(isConnected(id1,id2) == false) {
-			return -1;
-		}
-		return 0;
-	}
-	
-	static void printGraph(MyGraph graph) 
-    {
-        for(int v = 0; v < graph.vertex; v++) 
-        { 
-            System.out.println("Adjacency list of vertex "+ v); 
-            System.out.print("head"); 
-            for(Integer pCrawl: graph.adjacencyList[v]){ 
-                System.out.print(" -> "+pCrawl); 
-            } 
-            System.out.println("\n"); 
-        } 
+
+        boolean visited[] = new boolean[this.vertex];
+        int distance[] = new int[this.vertex];
+        LinkedList<Integer> queue = new LinkedList<Integer>();
+
+        visited[id1] = true;
+        distance[id1] = 0;
+        queue.add(id1);
+
+        while (queue.size() != 0) {
+
+            int x = queue.pop();
+
+            // Iterator<Integer> i = this.adjacencyList[id1].listIterator();
+            for (int i = 0; i < this.adjacencyList[x].size(); i++) {
+                // int num = i.next();
+                if (visited[adjacencyList[x].get(i)]) {
+                    continue;
+                }
+                distance[adjacencyList[x].get(i)] = distance[x] + 1;
+                visited[adjacencyList[x].get(i)] = true;
+                queue.add(adjacencyList[x].get(i));
+                if (adjacencyList[x].get(i) == id2) {
+                    return distance[id2];
+                }
+            }
+
+        }
+
+        return -1;
     }
-	
-	
 
 }
+
+//static void printGraph(MyGraph graph) 
+//{
+//    for(int v = 0; v < graph.vertex; v++) 
+//    { 
+//        System.out.println("Adjacency list of vertex "+ v); 
+//        System.out.print("head"); 
+//        for(Integer pCrawl: graph.adjacencyList[v]){ 
+//            System.out.print(" -> "+pCrawl); 
+//        } 
+//        System.out.println("\n"); 
+//    } 
+//}
+
+
 
 
 // https://www.programiz.com/dsa/graph-adjacency-list
