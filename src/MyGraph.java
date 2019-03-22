@@ -10,12 +10,23 @@ public class MyGraph {
 
 	public static void main(String[] args) {
 
-		int[][] arr = { { 1, 0, 1, 0 }, { 0, 1, 1, 0 }, { 0, 1, 1, 1 }, { 1, 0, 0, 1 }, { 1, 0, 1, 1 } }; // Initialize
-																											// adjacency
-																											// matrix
+	//	int[][] arr = { { 0, 1, 0, 0, 1 }, { 0, 0, 1, 0, 0 }, { 0, 1, 0, 1, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } }; // Initialize adjacency matrix
+		int[][] arr = { { 0, 1, 1, 0 }, { 0, 0, 1, 0 }, { 1, 0, 0, 1 }, { 0, 0, 0, 1}};
 		MyGraph graph = new MyGraph(); // Initialize a MyGraph object
 		graph.initialize(arr); // Pass in adjacency matrix to be converted to adjacencyList
-
+		
+		System.out.println(graph.BFS(0));
+		System.out.println(graph.DFS(0));
+		
+		System.out.println(graph.hops(1, 1));
+		System.out.println(graph.isConnected(3, 3));
+		
+//		System.out.println(graph.hops(0, 1) + " <-- Should be 1"); //Should be 1
+//		System.out.println(graph.hops(3, 0) + " <-- Should be -1"); //Should be -1
+//		System.out.println(graph.hops(2, 1) + " <-- Should be 2"); //Should be 2
+//		System.out.println(graph.hops(1, 2) + " <-- Should be 1"); //Should be 1
+//		System.out.println(graph.hops(0, 3) + " <-- Should be 2"); //Should be 2
+//		System.out.println(graph.hops(3, 3) + " <-- Should be 0"); //Should be 3
 	}
 
 	@SuppressWarnings("unchecked")
@@ -68,13 +79,14 @@ public class MyGraph {
 	// from the
 	// starting node.)
 	String DFS(int id) {
+		
+		// Create StringBuilder that will be converted to String
 		StringBuilder DBuild = new StringBuilder();
 
-		// Mark all the vertices as not visited(set as
-		// false by default in java)
+		// Create boolean for each node in list as not visited.
 		boolean visited[] = new boolean[this.nodes];
 
-		// Call the recursive helper function to print DFS traversal
+		// Use recursion method to iterate through list, passing starting node, boolean array and our StringBuilder object 
 		recurrsiveDFSPart(id, visited, DBuild);
 
 		return DBuild.toString();
@@ -92,34 +104,40 @@ public class MyGraph {
 		// Use booleans to check if node has been visited or not. (all set to false)
 		boolean visited[] = new boolean[this.nodes];
 
-		// Create a queue for BFS
-		LinkedList<Integer> queue = new LinkedList<Integer>();
+		// Create a list to keep track of nodes
+		LinkedList<Integer> list = new LinkedList<Integer>();
+		
+		//Sets starting node boolean to visited and adds it to the beginning of the list
 		visited[id] = true;
-		queue.add(id);
+		list.add(id);
+		
+		
+		while (list.size() != 0) {
 
-		while (queue.size() != 0) {
-
-			id = queue.poll();
+			//Removes the head of the list (id) and appends it to the StringBuilder
+			id = list.poll();
 			BFSoutput.append(id + " ");
-
+			
+			//Creates Iterator and walks through Iterator using next() 
 			Iterator<Integer> i = this.adjacencyList[id].listIterator();
 			while (i.hasNext()) {
 				int num = i.next();
 				if (!visited[num]) {
+					//Sets the node boolean to visited and adds it to the list
 					visited[num] = true;
-					queue.add(num);
+					list.add(num);
 				}
 
 			}
 
 		}
-
+		//Converts StringBuilder to a string and returns it
 		return BFSoutput.toString();
 	}
 
 	// Return whether there is an edge from id1 to id2
 	boolean isConnected(int id1, int id2) {
-
+		//Checks if LinkedList contains() returns true or not
 		if (this.adjacencyList[id1].contains(id2)) {
 			return true;
 		}
@@ -128,38 +146,51 @@ public class MyGraph {
 
 	// Return the out-degree number of a node
 	int outDegree(int id) {
+		//Checks number of elements the specified node (id) has using size() method
 		return this.adjacencyList[id].size();
 	}
 
 	// Returns the minimal number of hops from node 1 to node
 	// 2. If there is no path from node 1 to node 2 then return -1.
 	int hops(int id1, int id2) {
-
+		
+		
 		boolean visited[] = new boolean[this.nodes];
 		int distance[] = new int[this.nodes];
-		LinkedList<Integer> queue = new LinkedList<Integer>();
+        LinkedList<Integer> queue = new LinkedList<Integer>();
+        
+        
+        visited[id1] = true;
+        distance[id1]=0;
+        queue.add(id1);
+        while (queue.size() != 0) {
 
-		visited[id1] = true;
-		distance[id1] = 0;
-		queue.add(id1);
+            id1 = queue.poll();
+           
+            Iterator<Integer> i = this.adjacencyList[id1].listIterator();
+            while (i.hasNext()) {
+            	int num = i.next();
+            	if(visited[num]) {
+            		if(num == id2 && num == id1) {
+            			return distance[id2];
+            		}
+            		continue;
+            	}
+            	distance[num]=distance[id1]+1;
+                    visited[num] = true;
+                    queue.add(num);
+                    
+                    
+                
+                if (num==id2) {
+                	
+                    return distance[id2];
+                }
+                
+               
+            }
 
-		while (queue.size() != 0) {
-
-			int x = queue.pop();
-
-			for (int i = 0; i < this.adjacencyList[x].size(); i++) {
-				if (visited[adjacencyList[x].get(i)]) {
-					continue;
-				}
-				distance[adjacencyList[x].get(i)] = distance[x] + 1;
-				visited[adjacencyList[x].get(i)] = true;
-				queue.add(adjacencyList[x].get(i));
-				if (adjacencyList[x].get(i) == id2) {
-					return distance[id2];
-				}
-			}
-
-		}
+        }
 
 		return -1;
 	}
