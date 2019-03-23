@@ -9,24 +9,11 @@ public class MyGraph {
 	public LinkedList<Integer> adjacencyList[]; // Initialize adjacencyList.
 
 	public static void main(String[] args) {
-
+		
 	//	int[][] arr = { { 0, 1, 0, 0, 1 }, { 0, 0, 1, 0, 0 }, { 0, 1, 0, 1, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0 } }; // Initialize adjacency matrix
-		int[][] arr = { { 0, 1, 1, 0 }, { 0, 0, 1, 0 }, { 1, 0, 0, 1 }, { 0, 0, 0, 1}};
-		MyGraph graph = new MyGraph(); // Initialize a MyGraph object
-		graph.initialize(arr); // Pass in adjacency matrix to be converted to adjacencyList
-		
-		System.out.println(graph.BFS(0));
-		System.out.println(graph.DFS(0));
-		
-		System.out.println(graph.hops(1, 1));
-		System.out.println(graph.isConnected(3, 3));
-		
-//		System.out.println(graph.hops(0, 1) + " <-- Should be 1"); //Should be 1
-//		System.out.println(graph.hops(3, 0) + " <-- Should be -1"); //Should be -1
-//		System.out.println(graph.hops(2, 1) + " <-- Should be 2"); //Should be 2
-//		System.out.println(graph.hops(1, 2) + " <-- Should be 1"); //Should be 1
-//		System.out.println(graph.hops(0, 3) + " <-- Should be 2"); //Should be 2
-//		System.out.println(graph.hops(3, 3) + " <-- Should be 0"); //Should be 3
+	//	MyGraph graph = new MyGraph(); // Initialize a MyGraph object
+	//	graph.initialize(arr); // Pass in adjacency matrix to be converted to adjacencyList
+	
 	}
 
 	@SuppressWarnings("unchecked")
@@ -154,34 +141,51 @@ public class MyGraph {
 	// 2. If there is no path from node 1 to node 2 then return -1.
 	int hops(int id1, int id2) {
 		
-		
+		// Create boolean array to keep track of visited nodes
 		boolean visited[] = new boolean[this.nodes];
+		
+		//Create int array to keep track of distance traveled
 		int distance[] = new int[this.nodes];
-        LinkedList<Integer> queue = new LinkedList<Integer>();
+		
+		// Create list to keep track of nodes
+        LinkedList<Integer> list = new LinkedList<Integer>();
         
-        
+        //Set starting node as visited. 
         visited[id1] = true;
+        //Special case for self loop
+        if(id1 == id2) {return 0;}
+        
+        //Set distance to 0 add the starting node to the list
         distance[id1]=0;
-        queue.add(id1);
-        while (queue.size() != 0) {
-
-            id1 = queue.poll();
+        list.add(id1);
+        
+        while (list.size() != 0) {
+        	
+        	//Removes the head of the list (id1)
+            id1 = list.poll();
            
+          //Creates Iterator and walks through Iterator using next()
             Iterator<Integer> i = this.adjacencyList[id1].listIterator();
             while (i.hasNext()) {
             	int num = i.next();
+            	
+            	//If node has already been visited, reset to begin of while
             	if(visited[num]) {
             		if(num == id2 && num == id1) {
             			return distance[id2];
             		}
             		continue;
             	}
+            	
+            	//Increment distance traveled
             	distance[num]=distance[id1]+1;
+            	//Set node to visited
                     visited[num] = true;
-                    queue.add(num);
+                   ///Add node to list
+                    list.add(num);
                     
                     
-                
+                //If id2 is found, return distance traveled
                 if (num==id2) {
                 	
                     return distance[id2];
