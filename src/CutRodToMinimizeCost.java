@@ -14,18 +14,21 @@ public class CutRodToMinimizeCost {
 
 
     public int cutRodToMinimizeCost(int [] markings, int total) {
-        int T[][] = new int[total+1][total+1];
+        int T[][] = new int[total+1][total+1]; //Create 2D square array.
         for(int i = 0 ; i < T.length; i++) {
             for(int j=0; j < T[i].length ; j++) {
-                T[i][j] = -1;
+                T[i][j] = -1;  //Place -1 as placeholder for every element in 2D square array
             }
         }
+//        System.out.println("line 24 cutRodToMinimizeCost: " + );
         return cutRodToMinimizeCost(markings, 0, total, T);
     }
 
     private int cutRodToMinimizeCost(int[] markings, int start, int end, int T[][]){
 
         if(T[start][end] != -1) {
+        	
+    //    	System.out.println("Line 29 if statement return T[start][end]: " + T[start][end]);
             return T[start][end];
         }
 
@@ -52,9 +55,11 @@ public class CutRodToMinimizeCost {
         }
         if(i == j){
             T[start][end] = end - start;
+           // System.out.println("if statement on line 57 return end - start: " + (end - start));
             return end - start;
         }
         int cost = end - start;
+      //  System.out.println("Line 61 cost: " + cost);
         int minCost = Integer.MAX_VALUE;
         for(int k=i; k <= j; k++) {
             int c1 = cutRodToMinimizeCost(markings, start, markings[k], T);
@@ -71,13 +76,18 @@ public class CutRodToMinimizeCost {
             return Integer.MAX_VALUE;
         }
         T[start][end] = cost + minCost;
+   //   System.out.println("Current cost: " + cost);
+   //   System.out.println("Current minCost: " + minCost);
+   //   System.out.println("Line 77 return cost + minCost: " + (cost + minCost));
         return cost + minCost;
     }
     
     public static void main(String args[]) {
-        int markings[] = {2,3,6,7};
+        int markings[] = {6, 17, 23, 36, 69, 72, 83};
         CutRodToMinimizeCost cr = new CutRodToMinimizeCost();
-        int cost = cr.cutRodToMinimizeCost(markings, 8);
+        int cost = cr.cutRodToMinimizeCost(markings, 100);
         System.out.println(cost);       
+        
+        // 100, 6, 17, 23, 36, 69, 72, 83 ... answer should be 264
     }
 }
