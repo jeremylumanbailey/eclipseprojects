@@ -15,7 +15,8 @@ class RodCutting
             int max_val = Integer.MIN_VALUE; 
             for (int j = 0; j < i; j++) 
                 max_val = Math.max(max_val,  
-                                   price[j] + val[i-j-1]); 
+                                   price[j] + val[i-j-1]);
+            
             val[i] = max_val; 
         } 
   
@@ -25,7 +26,7 @@ class RodCutting
     /* Driver program to test above functions */
     public static void main(String args[]) 
     { 
-        int arr[] = new int[] {1, 5, 8, 9, 10, 17, 17, 20}; 
+        int arr[] = new int[] {1, 5, 7, 9}; 
         int size = arr.length; 
         System.out.println("Maximum Obtainable Value is " + 
                             cutRod(arr, size)); 
