@@ -14,7 +14,7 @@ public class CutRodToMinimizeCost {
 
 
     public int cutRodToMinimizeCost(int [] markings, int total) {
-        int T[][] = new int[total+1][total+1]; //Create 2D square array.
+        int T[][] = new int[total+2][total+2]; //Create 2D square array.
         for(int i = 0 ; i < T.length; i++) {
             for(int j=0; j < T[i].length ; j++) {
                 T[i][j] = -1;  //Place -1 as placeholder for every element in 2D square array
