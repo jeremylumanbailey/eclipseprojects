@@ -1,3 +1,4 @@
+//Jeremy Bailey
 import java.util.Arrays;
 import java.util.Scanner;
 
